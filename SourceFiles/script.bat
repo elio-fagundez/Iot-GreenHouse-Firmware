@@ -16,5 +16,8 @@ arduino-cli lib install "DHT sensor library"
 REM Install the BH1750 sensor library
 arduino-cli lib install "BH1750"
 
+REM Install the DFRobot_CCS811 sensor library
+arduino-cli lib install "DFRobot_CCS811"
+
 echo Libraries installed correctly.
 pause

@@ -4,6 +4,7 @@
 #include "DHT.h"
 #include <Wire.h>
 #include <BH1750.h>
+#include "DFRobot_CCS811.h"
 
 /* ========================== DEBUG ==========================*/
 #define ENABLE_DEBUG        // Indicates whether serial debugging is enabled or not by default
