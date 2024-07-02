@@ -2,6 +2,7 @@
 #include "src/TempHum/TempHum.h"
 #include "src/LightSensor/LightSensor.h"
 #include "src/CapSoil/CapSoil.h"
+#include "src/CCS811/CCS811.h"
 
 //MAIN
 uint32_t stateVariables = 0;
@@ -14,7 +15,8 @@ BH1750 lightMeter;
 float lux;
 // MOISTURE
 int moisture;
-
+// CCS811
+DFRobot_CCS811 CCS811;
 
 void setup()
 {
@@ -29,6 +31,8 @@ void setup()
 
   CapSoil_init();
   moisture = Moisture_Read();
+
+  CCS811_init(&CCS811);
 
 }
 
