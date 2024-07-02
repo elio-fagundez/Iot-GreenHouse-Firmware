@@ -3,7 +3,7 @@
   
   #include "./main.h"
 
-  void initDht22(DHT *dht);
+  void DHT_init(DHT *dht);
   void DHTSensor(DHT *dht);
 
 #endif

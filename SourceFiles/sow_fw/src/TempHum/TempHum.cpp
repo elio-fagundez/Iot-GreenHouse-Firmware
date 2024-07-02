@@ -5,7 +5,7 @@ extern float temperature;
 extern float humidity;
 extern uint32_t stateVariables;
 
-void initDht22(DHT *dht)
+void DHT_init(DHT *dht)
 {
   dht->begin();
 }
