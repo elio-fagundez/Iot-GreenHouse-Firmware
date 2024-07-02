@@ -29,4 +29,6 @@ enum StateVariables {
   GPS_DATA_VALID = BIT1,
 };
 
+/* ========================== CAPACITIVE SOIL ==========================*/
+#define CAP_SOIL_PIN 32
 #endif
