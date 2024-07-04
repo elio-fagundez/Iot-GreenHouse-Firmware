@@ -2,7 +2,7 @@
 
 void CapSoil_init(void)
 {
-
+  return;
 }
 
 int Moisture_Read(void)

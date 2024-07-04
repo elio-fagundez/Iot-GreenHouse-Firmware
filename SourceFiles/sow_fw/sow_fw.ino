@@ -3,6 +3,7 @@
 #include "src/LightSensor/LightSensor.h"
 #include "src/CapSoil/CapSoil.h"
 #include "src/CCS811/CCS811.h"
+#include "src/Ph/Ph.h"
 
 //MAIN
 uint32_t stateVariables = 0;
@@ -41,6 +42,8 @@ void setup()
   moisture = Moisture_Read();
 
   CCS811_init(&CCS811);
+
+  PH_init();
 }
 
 void loop()
