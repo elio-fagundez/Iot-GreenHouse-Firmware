@@ -44,4 +44,13 @@ enum WiFiState
 
 /* ========================== CAPACITIVE SOIL ==========================*/
 #define CAP_SOIL_PIN 32
+
+/* ========================== PH ==========================*/
+#define ReceivedBufferLength      20
+#define SCOUNT                    30
+#define SLOPE_VALUE_ADDRESS       0
+#define INTERCEPT_VALUE_ADDRESS   (SlopeValueAddress + 4)
+#define SENSOR_PH_PIN             31
+#define VREF                      5000
+
 #endif
