@@ -8,7 +8,7 @@ extern float lux;
 
 void LightSensor_Init(BH1750 *sensor)
 {
-  Wire.begin();
+  Wire.begin(SDAPIN,SCLPIN);
   sensor->begin();
   DEBUG_NL("[LightSensor_Init] BH1750 Test begin");
 }
