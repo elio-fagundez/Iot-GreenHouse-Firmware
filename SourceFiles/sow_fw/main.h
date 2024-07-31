@@ -21,8 +21,8 @@ enum WiFiState
 };
 
 /* ========================== WIFI CREDENTIALS ==========================*/
-#define SSID "network"
-#define PASSWORD "password_default"
+#define SSID "Main_Program_24GHZ"
+#define PASSWORD "nuncadigasnunca2007"
 
 /* ========================== DEBUG ==========================*/
 #define ENABLE_DEBUG        // Indicates whether serial debugging is enabled or not by default
@@ -39,11 +39,13 @@ enum WiFiState
 #endif
 
 /* ========================== DHT22 ==========================*/
-#define DHTPIN 15
+#define DHTPIN 23
 #define DHTTYPE DHT22
-
+/* ========================== BH1750 ==========================*/
+#define SCLPIN 7
+#define SDAPIN 6
 /* ========================== CAPACITIVE SOIL ==========================*/
-#define CAP_SOIL_PIN 32
+#define MOISTUREPIN 2
 
 /* ========================== PH ==========================*/
 #define ReceivedBufferLength      20
@@ -52,5 +54,19 @@ enum WiFiState
 #define INTERCEPT_VALUE_ADDRESS   (SlopeValueAddress + 4)
 #define SENSOR_PH_PIN             31
 #define VREF                      5000
+
+/* ========================== MQ-135 ==========================*/
+#define MQ135_DO_PIN    4
+#define MQ135_AO_PIN    3
+// Datos para lectura multiple
+#define RL_VALUE                5       // Resistencia RL del modulo en Kilo ohms
+#define R0                      10      // Resistencia R0 del sensor en Kilo ohms
+#define READ_SAMPLE_INTERVAL    100     // Tiempo entre muestras
+#define READ_SAMPLE_TIMES       5       // Numero muestras
+// Ajustar estos valores para vuestro sensor según el Datasheet
+#define X0    200
+#define Y0    1.7
+#define X1    10000
+#define Y1    0.28
 
 #endif
