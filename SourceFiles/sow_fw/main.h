@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include <BH1750.h>
 #include "DFRobot_CCS811.h"
+#include "DFRobot_GDL.h"
 
 /* ========================== DEFINITIONS ==========================*/
 enum StateVariables
@@ -24,18 +25,26 @@ enum WiFiState
 #define SSID "Main_Program_24GHZ"
 #define PASSWORD "nuncadigasnunca2007"
 
+/* ==========================       MQTT        ==========================*/
+#include <PubSubClient.h>
+#define MQTT_SERVER           "192.168.0.58"
+#define MQTT_PORT             1883
+#define MQTT_TIME2PUBLISH_S   10
+
 /* ========================== DEBUG ==========================*/
 #define ENABLE_DEBUG        // Indicates whether serial debugging is enabled or not by default
 #define SERIAL_MON Serial   // Serial output for debug console
 #define SERIAL_BAUD 115200  // Data rate in bits per second (baud)
 #ifdef ENABLE_DEBUG
 #define DEBUG_NN(...) printf(__VA_ARGS__)
+#define DEBUG_NT(...) print(__VA_ARGS__)
 #define DEBUG_NL(...) \
   printf(__VA_ARGS__); \
   printf("\n")
 #else
 #define DEBUG_NN(...)
 #define DEBUG_NL(...)
+#define DEBUG_NT(...)
 #endif
 
 /* ========================== DHT22 ==========================*/
@@ -45,7 +54,7 @@ enum WiFiState
 #define SCLPIN 7
 #define SDAPIN 6
 /* ========================== CAPACITIVE SOIL ==========================*/
-#define MOISTUREPIN 2
+#define MOISTUREPIN 14
 
 /* ========================== PH ==========================*/
 #define ReceivedBufferLength      20
@@ -57,7 +66,7 @@ enum WiFiState
 
 /* ========================== MQ-135 ==========================*/
 #define MQ135_DO_PIN    4
-#define MQ135_AO_PIN    3
+#define MQ135_AO_PIN    5
 // Datos para lectura multiple
 #define RL_VALUE                5       // Resistencia RL del modulo en Kilo ohms
 #define R0                      10      // Resistencia R0 del sensor en Kilo ohms
@@ -69,4 +78,11 @@ enum WiFiState
 #define X1    10000
 #define Y1    0.28
 
+/* ========================== 320x240 TFT LCD ==========================*/
+#define TFT_DC      2
+#define TFT_CS      6
+#define TFT_RST     3
+
+extern DFRobot_ILI9341_240x320_HW_SPI  screen;
+extern PubSubClient client;
 #endif

@@ -5,6 +5,7 @@
 #include "src/CCS811/CCS811.h"
 #include "src/Ph/Ph.h"
 #include "src/MQ135/MQ135.h"
+#include "src/mqtt/mqtt_srv.h"
 
 //MAIN
 uint32_t stateVariables = 0;
@@ -22,13 +23,18 @@ DFRobot_CCS811 CCS811;
 // MQ135
 float rs_med;
 float concentration;
+// DISPLAY
+DFRobot_ILI9341_240x320_HW_SPI  screen(/*dc=*/TFT_DC,/*cs=*/TFT_CS,/*rst=*/TFT_RST);
+// MQTT
+WiFiClient espClient;
+PubSubClient client(espClient);
 // WIFI STATE
 WiFiState wifiState = DISCONNECTED;
 unsigned long lastAttemptTime = 0;
 const unsigned long attemptInterval = 1000;
 int connect_count = 0;
 // timers
-uint8_t t_printData = 0;
+uint8_t t_printData = 0, t_publishData = 0;
 
 // Functions
 void handleWiFiConnection(void);
@@ -54,16 +60,26 @@ void setup()
   mq135_init(MQ135_DO_PIN, MQ135_AO_PIN);
 
   PH_init();
+
+  mqtt_srv_init();
 }
 
 void loop()
 {
   handleWiFiConnection();
+  mqtt_srv_loop();
   processTime();
-  if(t_printData)
+
+  if(t_printData >= 5)
   {
     printData();
     t_printData = 0;
+  }
+
+  if (t_publishData >= MQTT_TIME2PUBLISH_S)
+  {
+    mqtt_srv_publish("esp32/testdata","data from device");
+    t_publishData = 0;
   }
 }
 
@@ -79,6 +95,7 @@ void handleWiFiConnection()
         WiFi.begin(SSID, PASSWORD);
         wifiState = CONNECTING;
         lastAttemptTime = millis();
+        first_connect = 0;
       }
       break;
 
@@ -117,6 +134,7 @@ void handleWiFiConnection()
         if (!first_connect)
         {
           first_connect = 1;
+          mqtt_srv_reconnect();
         }
       }
       break;
@@ -146,5 +164,6 @@ void processTime(void)
   {
     lastAttemptTime = millis();
     t_printData++;
+    t_publishData++;
   }
 }

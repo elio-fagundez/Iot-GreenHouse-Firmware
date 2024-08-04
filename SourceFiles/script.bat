@@ -19,8 +19,17 @@ arduino-cli lib install "BH1750"
 REM Install the DFRobot_CCS811 sensor library
 arduino-cli lib install "DFRobot_CCS811"
 
-REM Install the PubSubClient sensor library
+REM Install the PubSubClient library
 arduino-cli lib install "PubSubClient"
+
+REM Install the Adafruit_BusIO library
+arduino-cli lib install "Adafruit_BusIO"
+
+REM Install the Adafruit GFX Library library
+arduino-cli lib install "Adafruit_GFX_Library"
+
+REM Install the DFRobot_GDL library
+arduino-cli lib install "DFRobot_GDL"
 
 echo Libraries installed correctly.
 pause
