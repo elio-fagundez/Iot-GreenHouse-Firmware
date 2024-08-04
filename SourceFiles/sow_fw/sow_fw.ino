@@ -6,6 +6,7 @@
 #include "src/Ph/Ph.h"
 #include "src/MQ135/MQ135.h"
 #include "src/mqtt/mqtt_srv.h"
+#include "src/Display_tft/Display_tft.h"
 
 //MAIN
 uint32_t stateVariables = 0;
@@ -17,14 +18,16 @@ float humidity;
 BH1750 lightMeter;
 float lux;
 // MOISTURE
-int moisture;
+uint16_t moisture = 0;
 // CCS811
 DFRobot_CCS811 CCS811;
 // MQ135
 float rs_med;
 float concentration;
 // DISPLAY
+DFRobot_Touch_XPT2046 touch(/*cs=*/TOUCH_CS);
 DFRobot_ILI9341_240x320_HW_SPI  screen(/*dc=*/TFT_DC,/*cs=*/TFT_CS,/*rst=*/TFT_RST);
+DFRobot_UI ui(&screen, &touch);
 // MQTT
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -45,7 +48,7 @@ void setup()
 {
   SERIAL_MON.begin(SERIAL_BAUD);
   DEBUG_NL("[setup] Initializing sow device");
-
+  
   DHT_init(&dht);
   DHTSensor(&dht);
 
@@ -53,13 +56,15 @@ void setup()
   LightSensor_Read(0);
 
   CapSoil_init();
-  moisture = Moisture_Read((int)MOISTUREPIN);
+  moisture = Moisture_Read((uint8_t)MOISTUREPIN);
 
   CCS811_init(&CCS811);
 
   mq135_init(MQ135_DO_PIN, MQ135_AO_PIN);
 
   PH_init();
+
+  display_tft_init();
 
   mqtt_srv_init();
 }
@@ -69,6 +74,7 @@ void loop()
   handleWiFiConnection();
   mqtt_srv_loop();
   processTime();
+  display_tft_loop();
 
   if(t_printData >= 5)
   {
@@ -145,14 +151,15 @@ void printData(void)
 {
   char aux[255];
   memset(aux, 0, sizeof(aux));
-  sprintf(aux, "[loop] temp: %.2f hum: %.2f lum: %.2f moi: %.2f rs_med: %.2f conc: %.2f volts: %.2f", temperature, humidity, lux, moisture, rs_med, concentration, mq135_ao_get());
+
+  rs_med = mq135_readMQ();    // Obtener la Rs promedio
+  concentration = mq135_getConcentration(rs_med/R0);
+  moisture = Moisture_Read((uint8_t)MOISTUREPIN);
+  sprintf(aux, "[loop] temp: %.2f hum: %.2f lum: %.2f moi: %d rs_med: %.2f conc: %.2f volts: %.2f", temperature, humidity, lux, moisture, rs_med, concentration, mq135_ao_get());
   DEBUG_NL(aux);
   DHTSensor(&dht);
   LightSensor_Read(0);
-  rs_med = mq135_readMQ();    // Obtener la Rs promedio
-  concentration = mq135_getConcentration(rs_med/R0);
 
-  moisture = Moisture_Read((int)MOISTUREPIN);
 }
 
 void processTime(void)

@@ -5,7 +5,7 @@ void CapSoil_init(void)
   return;
 }
 
-int Moisture_Read(int sensorPin)
+uint16_t Moisture_Read(uint8_t sensorPin)
 {
   return analogRead(sensorPin);
 }
