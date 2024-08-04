@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <BH1750.h>
 #include "DFRobot_CCS811.h"
-#include "DFRobot_GDL.h"
+
 
 /* ========================== DEFINITIONS ==========================*/
 enum StateVariables
@@ -54,7 +54,7 @@ enum WiFiState
 #define SCLPIN 7
 #define SDAPIN 6
 /* ========================== CAPACITIVE SOIL ==========================*/
-#define MOISTUREPIN 14
+#define MOISTUREPIN 2
 
 /* ========================== PH ==========================*/
 #define ReceivedBufferLength      20
@@ -79,10 +79,17 @@ enum WiFiState
 #define Y1    0.28
 
 /* ========================== 320x240 TFT LCD ==========================*/
-#define TFT_DC      2
-#define TFT_CS      6
-#define TFT_RST     3
+#include "DFRobot_UI.h"
+#include "Arduino.h"
+#include "DFRobot_GDL.h"
+#include "DFRobot_Touch.h"
+#define TFT_DC      12
+#define TFT_CS      18
+#define TFT_RST     22
+#define TOUCH_CS    13
 
 extern DFRobot_ILI9341_240x320_HW_SPI  screen;
+extern DFRobot_Touch_XPT2046 touch;
+extern DFRobot_UI ui;
 extern PubSubClient client;
 #endif

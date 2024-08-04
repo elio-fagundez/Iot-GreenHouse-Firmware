@@ -25,8 +25,11 @@ arduino-cli lib install "PubSubClient"
 REM Install the Adafruit_BusIO library
 arduino-cli lib install "Adafruit_BusIO"
 
-REM Install the Adafruit GFX Library library
+REM Install the Adafruit GFX library
 arduino-cli lib install "Adafruit_GFX_Library"
+
+REM Install the XPT2046_Touchscreen library
+arduino-cli lib install "XPT2046_Touchscreen"
 
 REM Install the DFRobot_GDL library
 arduino-cli lib install "DFRobot_GDL"
