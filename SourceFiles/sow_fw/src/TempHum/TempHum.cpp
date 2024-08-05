@@ -17,7 +17,7 @@ void DHTSensor(DHT *dht)
   if (isnan(humidity) || isnan(temperature))
   {
     stateVariables &= ~DHT22_ONE_DETECTED;
-    DEBUG_NL("[SensorDHT] Error de sensor DHT11");
+    DEBUG_NL("[SensorDHT] Error de sensor DHT22");
     return;
   }
   stateVariables |= DHT22_ONE_DETECTED;
