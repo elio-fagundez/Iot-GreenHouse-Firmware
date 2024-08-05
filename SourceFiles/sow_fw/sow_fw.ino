@@ -24,6 +24,8 @@ DFRobot_CCS811 CCS811;
 // MQ135
 float rs_med;
 float concentration;
+// PH
+float ph = 0.0;
 // DISPLAY
 DFRobot_Touch_XPT2046 touch(/*cs=*/TOUCH_CS);
 DFRobot_ILI9341_240x320_HW_SPI  screen(/*dc=*/TFT_DC,/*cs=*/TFT_CS,/*rst=*/TFT_RST);
@@ -48,7 +50,7 @@ void setup()
 {
   SERIAL_MON.begin(SERIAL_BAUD);
   DEBUG_NL("[setup] Initializing sow device");
-  
+  analogReadResolution(9);
   DHT_init(&dht);
   DHTSensor(&dht);
 
@@ -155,7 +157,8 @@ void printData(void)
   rs_med = mq135_readMQ();    // Obtener la Rs promedio
   concentration = mq135_getConcentration(rs_med/R0);
   moisture = Moisture_Read((uint8_t)MOISTUREPIN);
-  sprintf(aux, "[loop] temp: %.2f hum: %.2f lum: %.2f moi: %d rs_med: %.2f conc: %.2f volts: %.2f", temperature, humidity, lux, moisture, rs_med, concentration, mq135_ao_get());
+  ph = PH_get();
+  sprintf(aux, "[loop] temp: %.2f hum: %.2f lum: %.2f moi: %d rs_med: %.2f conc: %.2f volts: %.2f Ph: %.2f", temperature, humidity, lux, moisture, rs_med, concentration, mq135_ao_get(), ph);
   DEBUG_NL(aux);
   DHTSensor(&dht);
   LightSensor_Read(0);

@@ -61,7 +61,7 @@ enum WiFiState
 #define SCOUNT                    30
 #define SLOPE_VALUE_ADDRESS       0
 #define INTERCEPT_VALUE_ADDRESS   (SlopeValueAddress + 4)
-#define SENSOR_PH_PIN             31
+#define SENSOR_PH_PIN             3
 #define VREF                      5000
 
 /* ========================== MQ-135 ==========================*/
