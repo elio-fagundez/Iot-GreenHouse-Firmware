@@ -7,6 +7,7 @@
 #include "src/MQ135/MQ135.h"
 #include "src/mqtt/mqtt_srv.h"
 #include "src/Display_tft/Display_tft.h"
+#include "src/outputs/outputs.h"
 
 //MAIN
 uint32_t stateVariables = 0;
@@ -51,6 +52,7 @@ void setup()
   SERIAL_MON.begin(SERIAL_BAUD);
   DEBUG_NL("[setup] Initializing sow device");
   analogReadResolution(9);
+  outputs_init();
   DHT_init(&dht);
   DHTSensor(&dht);
 
@@ -69,6 +71,8 @@ void setup()
   display_tft_init();
 
   mqtt_srv_init();
+
+  test_all_outputs();
 }
 
 void loop()

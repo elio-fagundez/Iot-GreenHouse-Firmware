@@ -88,6 +88,13 @@ enum WiFiState
 #define TFT_RST     22
 #define TOUCH_CS    13
 
+/* ==========================    OUTPUTS    ==========================*/
+#define FAN_PIN         14
+#define HEATING_PIN     0
+#define SUBMERSIBL_PIN  1
+#define WATER_PUMP_PIN  8
+
+
 extern DFRobot_ILI9341_240x320_HW_SPI  screen;
 extern DFRobot_Touch_XPT2046 touch;
 extern DFRobot_UI ui;
