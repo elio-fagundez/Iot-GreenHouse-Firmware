@@ -22,11 +22,12 @@ void btnCallback(DFRobot_UI::sButton_t &btn,DFRobot_UI::sTextBox_t &obj)
 
 void display_tft_init(void)
 {
-  DEBUG_NL("\n\n\n[display_tft_init]\n\n");
   //UI initialization
   ui.begin();
   //Set the UI theme, there are two themes to choose from: CLASSIC and MODERN.
   ui.setTheme(DFRobot_UI::MODERN); 
+  touch.setRotation(1);
+  screen.setRotation(1);
   //Create a text box control
   DFRobot_UI::sTextBox_t & tb = ui.creatText();
   tb.bgColor = 0xe6B6;
