@@ -93,7 +93,8 @@ enum WiFiState
 #define HEATING_PIN     0
 #define SUBMERSIBL_PIN  1
 #define WATER_PUMP_PIN  8
-
+#define RELAY_01_PIN    15
+#define RELAY_02_PIN    9
 
 extern DFRobot_ILI9341_240x320_HW_SPI  screen;
 extern DFRobot_Touch_XPT2046 touch;
