@@ -1,6 +1,8 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 #include <WiFi.h>
+#include "LittleFS.h"
+#include <WiFiClientSecure.h>
 #include "DHT.h"
 #include <Wire.h>
 #include <BH1750.h>
@@ -27,8 +29,11 @@ enum WiFiState
 
 /* ==========================       MQTT        ==========================*/
 #include <PubSubClient.h>
-#define MQTT_SERVER           "192.168.0.58"
-#define MQTT_PORT             1883
+#define MQTT_SERVER           "servidor.amazonaws.com"
+#define MQTT_PORT             8883
+#define FILE__PEM             "/AmazonRootCA1.pem"
+#define FILE__PEM__CRT        "/08e3be248a-certificate.pem.crt"
+#define FILE__PEM__KEY        "/08e3be248a-private.pem.key"
 #define MQTT_TIME2PUBLISH_S   10
 
 /* ========================== DEBUG ==========================*/
@@ -99,5 +104,6 @@ enum WiFiState
 extern DFRobot_ILI9341_240x320_HW_SPI  screen;
 extern DFRobot_Touch_XPT2046 touch;
 extern DFRobot_UI ui;
+extern WiFiClientSecure espClient;
 extern PubSubClient client;
 #endif
