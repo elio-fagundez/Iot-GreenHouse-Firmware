@@ -32,8 +32,9 @@ DFRobot_Touch_XPT2046 touch(/*cs=*/TOUCH_CS);
 DFRobot_ILI9341_240x320_HW_SPI  screen(/*dc=*/TFT_DC,/*cs=*/TFT_CS,/*rst=*/TFT_RST);
 DFRobot_UI ui(&screen, &touch);
 // MQTT
-WiFiClient espClient;
+WiFiClientSecure espClient;
 PubSubClient client(espClient);
+char payload_msg[256];
 // WIFI STATE
 WiFiState wifiState = DISCONNECTED;
 unsigned long lastAttemptTime = 0;
@@ -90,7 +91,9 @@ void loop()
 
   if (t_publishData >= MQTT_TIME2PUBLISH_S)
   {
-    mqtt_srv_publish("esp32/testdata","data from device");
+    memset(payload_msg, 0, sizeof(payload_msg));
+    sprintf(payload_msg, "{\"temp\": %.2f, \"hum\": %.2f, \"lum\": %.2f, \"moi\": %d, \"rs_med\": %.2f, \"conc\": %.2f, \"volts\": %.2f, \"Ph\": %.2f}", temperature, humidity, lux, moisture, rs_med, concentration, mq135_ao_get(), ph);
+    mqtt_srv_publish("topic/example/sow", payload_msg);
     t_publishData = 0;
   }
 }
