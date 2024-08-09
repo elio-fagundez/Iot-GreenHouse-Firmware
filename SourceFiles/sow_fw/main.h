@@ -29,11 +29,11 @@ enum WiFiState
 
 /* ==========================       MQTT        ==========================*/
 #include <PubSubClient.h>
-#define MQTT_SERVER           "servidor.amazonaws.com"
-#define MQTT_PORT             8883
-#define FILE__PEM             "/AmazonRootCA1.pem"
-#define FILE__PEM__CRT        "/08e3be248a-certificate.pem.crt"
-#define FILE__PEM__KEY        "/08e3be248a-private.pem.key"
+#define MQTT_SERVER           "servidor.amazonaws.com"            /* aws iot core endpoint */
+#define MQTT_PORT             8883                                /* port aws iot core*/
+#define FILE__PEM             "/AmazonRootCA1.pem"                /* RSA 2048 bit key */
+#define FILE__PEM__CRT        "/08e3be248a-certificate.pem.crt"   /* Public key file aws iot core */ 
+#define FILE__PEM__KEY        "/08e3be248a-private.pem.key"       /* Privated key file aws iot core */ 
 #define MQTT_TIME2PUBLISH_S   10
 
 /* ========================== DEBUG ==========================*/
