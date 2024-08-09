@@ -20,6 +20,7 @@ SOW is an IoT device firmware project based on the ESP32-C6 microcontroller. Thi
 - **Hardware**: SOW IoT device based on ESP32-C6.
 - **Software**: Arduino IDE with ESP32 support.
 - **Arduino CLI**: arduino command line interface [https://arduino.github.io/arduino-cli/0.35/installation/]
+- **ESP32 LittleFS**: Upload Files to the Filesystem [https://randomnerdtutorials.com/arduino-ide-2-install-esp32-littlefs/]
 
 ### Installation
 
