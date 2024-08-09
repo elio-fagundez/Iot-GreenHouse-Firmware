@@ -31,6 +31,7 @@ enum WiFiState
 #include <PubSubClient.h>
 #define MQTT_SERVER           "servidor.amazonaws.com"            /* aws iot core endpoint */
 #define MQTT_PORT             8883                                /* port aws iot core*/
+/* This files must be in the data folder in the same root of the .ino file */
 #define FILE__PEM             "/AmazonRootCA1.pem"                /* RSA 2048 bit key */
 #define FILE__PEM__CRT        "/08e3be248a-certificate.pem.crt"   /* Public key file aws iot core */ 
 #define FILE__PEM__KEY        "/08e3be248a-private.pem.key"       /* Privated key file aws iot core */ 
