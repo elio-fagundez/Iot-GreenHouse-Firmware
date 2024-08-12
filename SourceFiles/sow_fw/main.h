@@ -29,7 +29,7 @@ enum WiFiState
 
 /* ==========================       MQTT        ==========================*/
 #include <PubSubClient.h>
-#define MQTT_SERVER           "a1nnqcmds6nyzp-ats.iot.us-east-2.amazonaws.com"/*"servidor.amazonaws.com"*/            /* aws iot core endpoint */
+#define MQTT_SERVER           "servidor.amazonaws.com"            /* aws iot core endpoint */
 #define MQTT_PORT             8883                                /* port aws iot core*/
 /* This files must be in the data folder in the same root of the .ino file */
 #define FILE__PEM             "/AmazonRootCA1.pem"                /* RSA 2048 bit key */
