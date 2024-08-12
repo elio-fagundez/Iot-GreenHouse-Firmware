@@ -148,7 +148,8 @@ void mqtt_srv_reconnect(void)
       // Subscribe
       client.subscribe("esp32/output");
       client.publish("ei_out", "hello world");
-    } else
+    } 
+    else
     {
       SERIAL_MON.print("failed, rc=");
       SERIAL_MON.print(client.state());

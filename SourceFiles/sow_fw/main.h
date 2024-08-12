@@ -29,7 +29,7 @@ enum WiFiState
 
 /* ==========================       MQTT        ==========================*/
 #include <PubSubClient.h>
-#define MQTT_SERVER           "servidor.amazonaws.com"            /* aws iot core endpoint */
+#define MQTT_SERVER           "a1nnqcmds6nyzp-ats.iot.us-east-2.amazonaws.com"/*"servidor.amazonaws.com"*/            /* aws iot core endpoint */
 #define MQTT_PORT             8883                                /* port aws iot core*/
 /* This files must be in the data folder in the same root of the .ino file */
 #define FILE__PEM             "/AmazonRootCA1.pem"                /* RSA 2048 bit key */
@@ -54,25 +54,47 @@ enum WiFiState
 #endif
 
 /* ========================== DHT22 ==========================*/
+#if CONFIG_IDF_TARGET_ESP32C6
 #define DHTPIN 23
+#else
+#define DHTPIN 27
+#endif
 #define DHTTYPE DHT22
 /* ========================== BH1750 ==========================*/
+#if CONFIG_IDF_TARGET_ESP32C6
 #define SCLPIN 7
 #define SDAPIN 6
+#else
+#define SCLPIN 22
+#define SDAPIN 21
+#endif
 /* ========================== CAPACITIVE SOIL ==========================*/
+#if CONFIG_IDF_TARGET_ESP32C6
 #define MOISTUREPIN 2
+#else
+#define MOISTUREPIN 4
+#endif
 
 /* ========================== PH ==========================*/
 #define ReceivedBufferLength      20
 #define SCOUNT                    30
 #define SLOPE_VALUE_ADDRESS       0
 #define INTERCEPT_VALUE_ADDRESS   (SlopeValueAddress + 4)
-#define SENSOR_PH_PIN             3
 #define VREF                      5000
+#if CONFIG_IDF_TARGET_ESP32C6
+#define SENSOR_PH_PIN             3
+#else
+#define SENSOR_PH_PIN             26
+#endif
 
 /* ========================== MQ-135 ==========================*/
+#if CONFIG_IDF_TARGET_ESP32C6
 #define MQ135_DO_PIN    4
 #define MQ135_AO_PIN    5
+#else
+#define MQ135_DO_PIN    32
+#define MQ135_AO_PIN    33
+#endif
 // Datos para lectura multiple
 #define RL_VALUE                5       // Resistencia RL del modulo en Kilo ohms
 #define R0                      10      // Resistencia R0 del sensor en Kilo ohms
@@ -89,18 +111,25 @@ enum WiFiState
 #include "Arduino.h"
 #include "DFRobot_GDL.h"
 #include "DFRobot_Touch.h"
+#if CONFIG_IDF_TARGET_ESP32C6
 #define TFT_DC      12
 #define TFT_CS      18
 #define TFT_RST     22
 #define TOUCH_CS    13
+#else
+#define TFT_DC      2
+#define TFT_CS      15
+#define TFT_RST     0
+#define TOUCH_CS    25
+#endif
 
 /* ==========================    OUTPUTS    ==========================*/
 #define FAN_PIN         14
 #define HEATING_PIN     0
 #define SUBMERSIBL_PIN  1
 #define WATER_PUMP_PIN  8
-#define RELAY_01_PIN    15
-#define RELAY_02_PIN    9
+#define RELAY_01_PIN    33
+#define RELAY_02_PIN    32
 
 extern DFRobot_ILI9341_240x320_HW_SPI  screen;
 extern DFRobot_Touch_XPT2046 touch;

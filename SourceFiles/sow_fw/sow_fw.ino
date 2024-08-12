@@ -51,9 +51,15 @@ void processTime(void);
 void setup()
 {
   SERIAL_MON.begin(SERIAL_BAUD);
-  DEBUG_NL("[setup] Initializing sow device");
+  #if CONFIG_IDF_TARGET_ESP32
+  DEBUG_NL("[setup] Initializing sow device, Compiling for ESP32");
+  #elif CONFIG_IDF_TARGET_ESP32C6
+  DEBUG_NL("[setup] Initializing sow device, Compiling for ESP32C6");
+  #else
+  DEBUG_NL("[setup] Initializing sow device, Plate not recognized");
+  #endif
   analogReadResolution(9);
-  outputs_init();
+  // outputs_init();
   DHT_init(&dht);
   DHTSensor(&dht);
 
