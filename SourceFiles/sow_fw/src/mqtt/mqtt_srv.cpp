@@ -7,6 +7,22 @@ String Read_privatekey;
 byte mac[6];
 char mac_Id[18];
 
+const char chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+String generateRandomString(int length)
+{
+  String randomString = "";
+  int charsLength = strlen(chars);
+
+  for (int i = 0; i < length; i++)
+  {
+    int randomIndex = random(charsLength);
+    randomString += chars[randomIndex];
+  }
+
+  return randomString;
+}
+
 void callback(char* topic, byte* message, unsigned int length)
 {
   SERIAL_MON.print("Message arrived on topic: ");
@@ -59,7 +75,7 @@ void mqtt_srv_init(void)
   while (file2.available())
   {
     Read_rootca = file2.readString();
-    SERIAL_MON.println(Read_rootca);
+    // SERIAL_MON.println(Read_rootca);
   }
   //*****************************
   // Cert leer archivo
@@ -73,7 +89,7 @@ void mqtt_srv_init(void)
   while (file4.available())
   {
     Read_cert = file4.readString();
-    SERIAL_MON.println(Read_cert);
+    // SERIAL_MON.println(Read_cert);
   }
   //***************************************
   //Privatekey leer archivo
@@ -87,7 +103,7 @@ void mqtt_srv_init(void)
   while (file6.available())
   {
     Read_privatekey = file6.readString();
-    SERIAL_MON.println(Read_privatekey);
+    // SERIAL_MON.println(Read_privatekey);
   }
   //=====================================================
 
@@ -103,20 +119,20 @@ void mqtt_srv_init(void)
   pRead_privatekey = (char *)malloc(sizeof(char) * (Read_privatekey.length() + 1));
   strcpy(pRead_privatekey, Read_privatekey.c_str());
 
-  SERIAL_MON.println("================================================================================================");
-  SERIAL_MON.println("Certificados que pasan adjuntan al espClient");
-  SERIAL_MON.println();
-  SERIAL_MON.println("Root CA:");
-  SERIAL_MON.write(pRead_rootca);
-  SERIAL_MON.println("================================================================================================");
-  SERIAL_MON.println();
-  SERIAL_MON.println("Cert:");
-  SERIAL_MON.write(pRead_cert);
-  SERIAL_MON.println("================================================================================================");
-  SERIAL_MON.println();
-  SERIAL_MON.println("privateKey:");
-  SERIAL_MON.write(pRead_privatekey);
-  SERIAL_MON.println("================================================================================================");
+  // SERIAL_MON.println("================================================================================================");
+  // SERIAL_MON.println("Certificados que pasan adjuntan al espClient");
+  // SERIAL_MON.println();
+  // SERIAL_MON.println("Root CA:");
+  // SERIAL_MON.write(pRead_rootca);
+  // SERIAL_MON.println("================================================================================================");
+  // SERIAL_MON.println();
+  // SERIAL_MON.println("Cert:");
+  // SERIAL_MON.write(pRead_cert);
+  // SERIAL_MON.println("================================================================================================");
+  // SERIAL_MON.println();
+  // SERIAL_MON.println("privateKey:");
+  // SERIAL_MON.write(pRead_privatekey);
+  // SERIAL_MON.println("================================================================================================");
 
   espClient.setCACert(pRead_rootca);
   espClient.setCertificate(pRead_cert);
@@ -135,13 +151,21 @@ void mqtt_srv_init(void)
 void mqtt_srv_reconnect(void)
 {
   // Loop until we're reconnected
+  uint8_t retry = 0;
+  if(WiFi.status() != WL_CONNECTED)
+  {
+    SERIAL_MON.print("Nowifi aborting  MQTT connection...\n");
+    delay(3000);
+    return;
+  }
   while (!client.connected())
   {
-    SERIAL_MON.print("Attempting MQTT connection...");
     // Attempt to connect
     // Creando un ID como ramdon
     String clientId = "ESP32-C6-";
-    clientId += String(random(0xffff), HEX);
+    clientId += generateRandomString(7);
+    SERIAL_MON.print("Attempting MQTT connection with client...");
+    SERIAL_MON.print(clientId);
     if (client.connect(clientId.c_str()))
     {
       SERIAL_MON.println("connected");
@@ -155,7 +179,13 @@ void mqtt_srv_reconnect(void)
       SERIAL_MON.print(client.state());
       SERIAL_MON.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
-      delay(5000);
+      delay(10000);
+      if(retry++ > 10)
+      {
+        SERIAL_MON.print("\nFAILED\n\n");
+        ESP.restart();
+        return;
+      }
     }
   }
 }

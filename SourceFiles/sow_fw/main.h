@@ -55,7 +55,7 @@ enum WiFiState
 
 /* ========================== DHT22 ==========================*/
 #if CONFIG_IDF_TARGET_ESP32C6
-#define DHTPIN 23
+#define DHTPIN 01
 #else
 #define DHTPIN 27
 #endif
@@ -124,10 +124,10 @@ enum WiFiState
 #endif
 
 /* ==========================    OUTPUTS    ==========================*/
-#define FAN_PIN         14
-#define HEATING_PIN     0
-#define SUBMERSIBL_PIN  1
-#define WATER_PUMP_PIN  8
+#define FAN_PIN         21
+#define HEATING_PIN     22
+#define SUBMERSIBL_PIN  23
+#define WATER_PUMP_PIN  20
 #define RELAY_01_PIN    33
 #define RELAY_02_PIN    32
 
